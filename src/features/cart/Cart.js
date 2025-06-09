@@ -101,6 +101,7 @@ export function Cart() {
                       <p>$262.00</p>
                     </div>
                     <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                    <Link to="/checkout">
                     <div className="mt-6">
                       <a
                         href="#"
@@ -109,6 +110,7 @@ export function Cart() {
                         Checkout
                       </a>
                     </div>
+                    </Link>
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                       <p>
                         or{' '}
