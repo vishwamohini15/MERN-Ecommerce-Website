@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  increment,
-  incrementAsync,
-  selectCount,
+
+  selectAllproducts,
+  fetchAllproductasync,
 } from '../productSlice';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
+import { ChevronLeftIcon, ChevronRightIcon, StarIcon} from '@heroicons/react/20/solid'
 import {
   Dialog,
   DialogBackdrop,
@@ -73,50 +73,20 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const products = [
-  {
-    id: 1,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: '$35',
-    color: 'Black',
-  },
-   {
-    id: 1,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: '$35',
-    color: 'Black',
-  }, {
-    id: 1,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: '$35',
-    color: 'Black',
-  }, {
-    id: 1,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: '$35',
-    color: 'Black',
-  },
-]
+
 
 
 
 export function ProductList() {
-  const count = useSelector(selectCount);
+  // const count = useSelector(selectCount);
   const dispatch = useDispatch();
-
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+    const products=useSelector(selectAllproducts)
+
+    useEffect(() => {
+      dispatch(fetchAllproductasync())
+    }, [dispatch])
+    
   return (
     <div>
       <div>
@@ -342,26 +312,35 @@ export function ProductList() {
          <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
 
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
           {products.map((product) => (
             <Link  to="/product-detail">
-            <div key={product.id} className="group relative">
+            <div key={product.id} className="group relative border-solid border-2 p-2 border-gray-200 ">
               <img
-                alt={product.imageAlt}
-                src={product.imageSrc}
-                className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
+                alt={product.title}
+                src={product.thumbnail}
+                className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-60"
               />
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                    <a href={product.href}>
+                    <a href={product.thumbnail}>
                       <span aria-hidden="true" className="absolute inset-0" />
-                      {product.name}
+                      {product.title}
                     </a>
                   </h3>
-                  <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                  <p className="mt-1  text-sm text-gray-500">
+                    <StarIcon className='w-5 h-6 inline'></StarIcon> 
+                    <span className='align-bottom'>{product.rating}</span>
+                    </p>
                 </div>
-                <p className="text-sm font-medium text-gray-900">{product.price}</p>
+              <div>
+                 
+                <p className="text-sm block  font-medium text-gray-900"> 
+                  ${Math.round(product.price*(1-product.discountPercentage/100))}</p>
+                   <p className="text-sm  block font-medium text-gray-500 line-through"> ${product.price}</p>
+              </div>
+
               </div>
             </div>
             </Link>

@@ -11,7 +11,7 @@ import {
   Route,
   Link,
 } from 'react-router-dom';
-import { Cart } from './features/cart/Cart';
+// import { Cart } from './features/cart/Cart';
 import CartPage from './pages/CartPage';
 import Ckeckout from './pages/Ckeckout';
 import ProductDetailPage from './pages/ProductDetailPage';
