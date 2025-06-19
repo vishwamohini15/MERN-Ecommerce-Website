@@ -38,7 +38,7 @@ const router = createBrowserRouter([
     element: <Ckeckout></Ckeckout>,
   },
   {
-    path: '/product-detail',
+    path: '/product-detail/:id',
     element: <ProductDetailPage></ProductDetailPage>,
   },
 ]);
