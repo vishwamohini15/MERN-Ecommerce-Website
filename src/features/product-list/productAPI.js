@@ -11,7 +11,7 @@ export function fetchAllproduct() {
 export function fetchproductById(id) {
   return new Promise(async(resolve) =>{
     //todo will not hard coded server URL here
-    const response=await fetch('http://localhost:8080/products'+id)
+    const response=await fetch('http://localhost:8080/products/'+id)
   const data=await response.json()
   resolve({data})
 }

@@ -113,7 +113,7 @@ export const { increment } = productSlice.actions;
 export const selectAllproducts = (state) => state.product.products;
 export const selectBrands = (state) => state.product.brands;
 export const selectCategories = (state) => state.product.categories;
-export const selectProductById = (state) => state.product.selectProduct;
+export const selectProductById = (state) => state.product.selectedProduct;
 
 export const selecttotalItems = (state) => state.product.totalItems;
 
