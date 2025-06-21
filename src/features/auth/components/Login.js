@@ -1,18 +1,32 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
+  checkUserAsync,
   increment,
   incrementAsync,
   selectCount,
+  selectError,
+  selectLoggedInuser,
 } from '../authSlice';
+import { useForm } from 'react-hook-form';
 
 export function Login() {
-  const count = useSelector(selectCount);
   const dispatch = useDispatch();
+  const error= useSelector(selectError)
+  const user=useSelector(selectLoggedInuser)
+  const {
+      register,
+      handleSubmit,
+      watch,
+      formState: { errors }} = useForm()
+  
+      // const user=useSelector(selectLoggedInuser)
+      console.log(errors);
 
   return (
     <div>
+      {user && <Navigate  to='/' replace={true}></Navigate>}
       <div>
          <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -27,20 +41,33 @@ export function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form 
+          noValidate  className="space-y-6" onSubmit={handleSubmit((data)=>{
+                      console.log(data);
+                      dispatch(
+                        checkUserAsync({email:data.email, password:data.password
+
+                        }))
+                    })}
+          >
             <div>
               <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                 Email address
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  name="email"
+                   id="email"
+                  {...register("email",{ required: "email is required", 
+                    pattern: {
+                      value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
+                      message: 'email not valid',
+                    },
+                  })}
                   type="email"
-                  required
-                  autoComplete="email"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
+              {errors.email &&  <p className='text-red-500'>{errors.email.message}</p>}
+
               </div>
             </div>
 
@@ -55,15 +82,17 @@ export function Login() {
                   </a>
                 </div>
               </div>
-              <div className="mt-2">
+               <div className="mt-2">
                 <input
                   id="password"
-                  name="password"
+                  {...register("password",{ required: "password is required",
+                   })}
                   type="password"
-                  required
-                  autoComplete="current-password"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
+                {errors.password && <p className='text-red-500'>{errors.password.message}</p> }
+                 {error && (<p className='text-red-500'>{error.message}</p> 
+                 )}
               </div>
             </div>
 
