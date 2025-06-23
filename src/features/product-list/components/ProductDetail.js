@@ -1,12 +1,14 @@
 'use client'
   //TODO: in server data will add color and size  and highlights
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
 import {useDispatch, useSelector } from 'react-redux';
 import {fetchAllproductByIDasync, selectProductById}  from '../productSlice'
 import {useParams} from 'react-router-dom'
+import { addTocartAsync } from '../../cart/cartSlice';
+import { selectLoggedInuser } from '../../auth/authSlice';
 
 
  const colors= [ 
@@ -36,12 +38,22 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+
+
 export default function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
+  const user= useSelector(selectLoggedInuser)
   const product=useSelector(selectProductById);
  const dispatch=useDispatch()
 const params = useParams();
+
+const handelcart=(e)=>{
+      e.preventDefault()
+      const newItem= {...product, quantity:1, user:user.id}
+      delete newItem['id'];
+      dispatch(addTocartAsync(newItem))
+}
 
   useEffect(() => {
     dispatch(fetchAllproductByIDasync(params.id))
@@ -220,6 +232,7 @@ const params = useParams();
               </div>
 
               <button
+              onClick={handelcart}
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
               >
