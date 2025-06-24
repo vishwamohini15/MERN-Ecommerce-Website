@@ -6,7 +6,8 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, Navigate } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   deleteItemFromCartAsync,
   increment,
@@ -15,38 +16,19 @@ import {
   updatecartAsync,
 } from '../features/cart/cartSlice';
 import { useForm } from 'react-hook-form';
+import { selectLoggedInuser, updateUserAsync } from '../features/auth/authSlice';
 
-const addresses = [
-  {
-    name: 'Leslie Alexander',
-    street:'111th main',
-    city:'pune',
-    pincode:11012,
-    state:'Mumbai',
-    phone:8975423456
-  },
-  {
-    name: 'lusii',
-    street:'111th main',
-    city:'Delhi',
-    pincode:98012,
-    state:'Delhi',
-    phone:8975423456
 
-  },
-  {
-    name: 'khushi',
-    street:'111th main',
-    city:'sitamarhi',
-    pincode:56012,
-    state:'Bihar',
-    phone:8975423456
 
-  },
- 
-]
-
+// useSelector
 const Ckeckout = () => {
+const user= useSelector(selectLoggedInuser)
+const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors }} = useForm()
+
    const [open, setOpen] = useState(true)
     const dispatch = useDispatch();
       const items=useSelector(selectitems)
@@ -62,11 +44,6 @@ const Ckeckout = () => {
       dispatch(deleteItemFromCartAsync(id))
     }
      
-    const {
-          register,
-          handleSubmit,
-          watch,
-          formState: { errors }} = useForm()
 
   return (
     <>
@@ -76,7 +53,14 @@ const Ckeckout = () => {
 
       <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
           <div className='lg:col-span-3'>
-    <form className='bg-white px-5 py-8 mt-12'>
+    <form className='bg-white px-5 py-8 mt-12' noValidate
+    onSubmit={handleSubmit((data)=>{
+                          console.log(data);
+                          dispatch(
+                        updateUserAsync({...user, addresses:[...user.addresses, data]})                            
+                          )
+                        })}
+    >
      <div className="space-y-12">
 
        <div className="border-b border-gray-900/10 pb-12">
@@ -109,31 +93,21 @@ const Ckeckout = () => {
                   id="email"
                   {...register("email",{ required: "email is required", })}
                   type="email"
-                  autoComplete="email"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="country" className="block text-sm/6 font-medium text-gray-900">
-                Country
+              <label htmlFor="phone" className="block text-sm/6 font-medium text-gray-900">
+                phone
               </label>
               <div className="mt-2 grid grid-cols-1">
-                <select
-                  id="country"
-                  {...register("country",{ required: "country is required", })}
-                  autoComplete="country-name"
-                  className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                >
-                  <option>India</option>
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
-                </select>
-                <ChevronDownIcon
-                  aria-hidden="true"
-                  className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+               <input
+                  id="phone"
+                  {...register("phone",{ required: "phone is required", })}
+                  type="tel"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
             </div>
@@ -144,10 +118,10 @@ const Ckeckout = () => {
               </label>
               <div className="mt-2">
                 <input
-                  id="street-address"
-                  name="street-address"
+                  id="streets"
+                  {...register("street",{ required: "street is required", })}
+
                   type="text"
-                  autoComplete="street-address"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
@@ -160,39 +134,40 @@ const Ckeckout = () => {
               <div className="mt-2">
                 <input
                   id="city"
-                  name="city"
+                  {...register("city",{ required: "city is required", })}
+                  
                   type="text"
-                  autoComplete="address-level2"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor="region" className="block text-sm/6 font-medium text-gray-900">
+              <label htmlFor="state" className="block text-sm/6 font-medium text-gray-900">
                 State / Province
               </label>
               <div className="mt-2">
                 <input
-                  id="region"
-                  name="region"
+                  id="state"
+                  {...register("state",{ required: "state is required", })}
+                  
                   type="text"
-                  autoComplete="address-level1"
+                  
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor="postal-code" className="block text-sm/6 font-medium text-gray-900">
+              <label htmlFor="pincode" className="block text-sm/6 font-medium text-gray-900">
                 ZIP / Postal code
               </label>
               <div className="mt-2">
                 <input
                   id="postal-code"
-                  name="postal-code"
+                  {...register("pincode",{ required: "pincode is required", })}
+                  
                   type="text"
-                  autoComplete="postal-code"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
@@ -219,7 +194,7 @@ const Ckeckout = () => {
             chosse from Existing addresses
           </p>
      <ul role="list" className="divide-y divide-gray-100">
-      {addresses.map((address) => (
+      {user.addresses.map((address) => (
         <li key={address.email} className="flex justify-between gap-x-6 py-5 border-solid border-2 border-gray-200">
           
           <div className="flex min-w-0 gap-x-4 px-4">

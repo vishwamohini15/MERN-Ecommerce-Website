@@ -6273,17 +6273,23 @@
     {
       "id": "2e47",
       "email": "vishwamohini0015@gmail.com",
-      "password": "Vishw@123"
+      "password": "Vishw@123",
+      "addresses": []
+
     },
     {
       "id": "4e63",
       "email": "viswamohinigupta@gmail.com",
-      "password": "Vishw@123"
+      "password": "Vishw@123",
+      "addresses": []
+
     },
     {
       "id": "9c2a",
       "email": "viswamohinigupta@gmail.com",
-      "password": "Hello2123"
+      "password": "Hello2123",
+      "addresses": []
+
     }
   ],
   "cart": [
