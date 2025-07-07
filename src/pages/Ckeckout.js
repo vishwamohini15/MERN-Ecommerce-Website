@@ -26,6 +26,7 @@ const user= useSelector(selectLoggedInuser)
 const {
     register,
     handleSubmit,
+    reset,
     watch,
     formState: { errors }} = useForm()
 
@@ -35,6 +36,10 @@ const {
     const totalAmount= items.reduce((amount, item)=>item.price*item.quantity +amount, 0)
     const totalItems= items.reduce((total, item)=>item.quantity + total, 0)
   
+  const [selectedAddress, setSelectedAddress]= useState(null)
+  const [paymentMethod, setpaymentMethod]= useState('cash')
+
+
     const handleQuantity=(e, item)=>{
       dispatch(updatecartAsync({...item, quantity: +e.target.value}))
     }
@@ -44,6 +49,15 @@ const {
       dispatch(deleteItemFromCartAsync(id))
     }
      
+    const handleAddress=(e)=>{
+      console.log(e.target.value);
+      setSelectedAddress(user.addresses[e.target.value])
+    }
+
+    const handlePayment=(e)=>{
+      console.log(e.target.value);
+      setpaymentMethod(e.target.value)
+    }
 
   return (
     <>
@@ -59,6 +73,7 @@ const {
                           dispatch(
                         updateUserAsync({...user, addresses:[...user.addresses, data]})                            
                           )
+                          reset()
                         })}
     >
      <div className="space-y-12">
@@ -194,13 +209,15 @@ const {
             chosse from Existing addresses
           </p>
      <ul role="list" className="divide-y divide-gray-100">
-      {user.addresses.map((address) => (
-        <li key={address.email} className="flex justify-between gap-x-6 py-5 border-solid border-2 border-gray-200">
+      {user.addresses.map((address, index) => (
+        <li key={index} className="flex justify-between gap-x-6 py-5 border-solid border-2 border-gray-200">
           
           <div className="flex min-w-0 gap-x-4 px-4">
                      <input
+                     onChange={handleAddress}
                      name='address'
                     type="radio"
+                    value={index}
                     className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
                   />
             
@@ -232,6 +249,9 @@ const {
                     defaultChecked
                     id="cash"
                     name="payments"
+                    onChange={handlePayment}
+                    value='cash'
+                    checked={paymentMethod ==='cash'}
                     type="radio"
                     className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
                   />
@@ -243,6 +263,10 @@ const {
                   <input
                     id="card"
                     name="payments"
+                    onChange={handlePayment}
+                    value='card'
+                    checked={paymentMethod ==='card'}
+
                     type="radio"
                     className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
                   />
@@ -250,7 +274,7 @@ const {
                     card payment
                   </label>
                 </div>
-                <div className="flex items-center gap-x-3">
+                {/* <div className="flex items-center gap-x-3">
                   <input
                     id="cash"
                     name="payments"
@@ -258,7 +282,7 @@ const {
                     className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
                   />
                  
-                </div>
+                </div> */}
               </div>
             </fieldset>
           </div>
@@ -343,7 +367,7 @@ const {
                         href="#"
                         className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-xs hover:bg-indigo-700"
                       >
-                        Checkout
+                        Order Now
                       </a>
                     </div>
                     </Link>

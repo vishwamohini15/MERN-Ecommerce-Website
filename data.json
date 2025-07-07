@@ -6274,22 +6274,38 @@
       "id": "2e47",
       "email": "vishwamohini0015@gmail.com",
       "password": "Vishw@123",
-      "addresses": []
-
+      "addresses": [
+        {
+          "name": "muskan",
+          "email": "vishwamohini0015@gmail.com",
+          "phone": "93341-01936",
+          "street": "iknowyou are",
+          "city": "sitamarhi",
+          "state": "bihar",
+          "pincode": "800234"
+        },
+        {
+          "name": "mh",
+          "email": "myself",
+          "phone": "9334101936",
+          "street": "iknowyou are",
+          "city": "sitamarhi",
+          "state": "bihar",
+          "pincode": "800234"
+        }
+      ]
     },
     {
       "id": "4e63",
       "email": "viswamohinigupta@gmail.com",
       "password": "Vishw@123",
       "addresses": []
-
     },
     {
       "id": "9c2a",
       "email": "viswamohinigupta@gmail.com",
       "password": "Hello2123",
       "addresses": []
-
     }
   ],
   "cart": [
