@@ -48,3 +48,16 @@ export function deleteItemFormCart(itemId) {
 }
   );
 }
+
+
+export function resetCard(userId) {
+  //get all items of user cart and then delete each item
+  return new Promise(async(resolve)=>{
+ const response= await fetchItemsByUserId(userId)
+ const items= response.data;
+ for(let item of items){
+  await deleteItemFormCart(item.id)
+ }
+ resolve({status:'success'})
+})
+}

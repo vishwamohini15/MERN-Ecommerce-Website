@@ -17,7 +17,7 @@ import {
 } from '../features/cart/cartSlice';
 import { useForm } from 'react-hook-form';
 import { selectLoggedInuser, updateUserAsync } from '../features/auth/authSlice';
-import { createOrderAsync } from '../features/order/orderSlice';
+import { createOrderAsync, selectCurrentOrder } from '../features/order/orderSlice';
 
 
 
@@ -34,6 +34,7 @@ const {
    const [open, setOpen] = useState(true)
     const dispatch = useDispatch();
       const items=useSelector(selectitems)
+      const currentOrder=useSelector(selectCurrentOrder)
     const totalAmount= items.reduce((amount, item)=>item.price*item.quantity +amount, 0)
     const totalItems= items.reduce((total, item)=>item.quantity + total, 0)
   
@@ -61,8 +62,14 @@ const {
     }
 
     const handleOrder=(e)=>{
-      const order={items,totalAmount,totalItems,user,paymentMethod,selectedAddress}
+      if(selectedAddress && paymentMethod){
+      const order={items,totalAmount,totalItems,user,paymentMethod,selectedAddress,status:'pending'  //other status can be delivered received.
+
+      }
         dispatch(createOrderAsync(order))
+      }else{
+        alert('Enter Address and payment menthod')
+      }
         //TODO: redirect to order success page
         //TODO:  click cart adter order
         //TODO: on server change the stock number of items
@@ -70,7 +77,7 @@ const {
   return (
     <>
       {!items.length && <Navigate  to='/' replace={true}></Navigate>}
-    
+    {currentOrder && <Navigate  to={`/order-success/${currentOrder.id}`} replace={true}></Navigate>}
      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
       <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
