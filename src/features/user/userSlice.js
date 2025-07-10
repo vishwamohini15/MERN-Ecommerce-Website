@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchCount } from './counterAPI';
+import { fetchCount } from './userAPI';
 import { fetchLoggedInUserOrders } from './userAPI';
 
 const initialState = {
@@ -10,8 +10,8 @@ const initialState = {
 
 export const fetchloggedInUserorderAsync = createAsyncThunk(
   'counter/fetchLoggedInUserOrders',
-  async (amount) => {
-    const response = await fetchLoggedInUserOrders(amount);
+  async (id) => {
+    const response = await fetchLoggedInUserOrders(id);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -38,7 +38,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { increment } = counterSlice.actions;
+export const { increment } = userSlice.actions;
+export const selectUserOrders=(state)=>state.user.userOrders;
 
-
-export default counterSlice.reducer;
+export default userSlice.reducer;
