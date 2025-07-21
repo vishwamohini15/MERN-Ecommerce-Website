@@ -18,12 +18,13 @@ import {
 import { useForm } from 'react-hook-form';
 import { selectLoggedInuser, updateUserAsync } from '../features/auth/authSlice';
 import { createOrderAsync, selectCurrentOrder } from '../features/order/orderSlice';
+import { selectUserInfo } from '../features/user/userSlice';
 
 
 
 // useSelector
 const Ckeckout = () => {
-const user= useSelector(selectLoggedInuser)
+const user= useSelector(selectUserInfo)
 const {
     register,
     handleSubmit,

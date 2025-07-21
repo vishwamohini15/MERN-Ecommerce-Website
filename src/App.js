@@ -8,8 +8,6 @@ import SingupPage from './pages/SingupPage';
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
-  Link,
 } from 'react-router-dom';
 // import { Cart } from './features/cart/Cart';
 import CartPage from './pages/CartPage';
@@ -21,8 +19,9 @@ import { fetchitemsByUserIdAsync } from './features/cart/cartSlice';
 import { selectLoggedInuser } from './features/auth/authSlice';
 import PageNotFound from './pages/404';
 import OrdersuccessPage from './pages/orderSuccessPage';
-import UserOrders from './features/user/components/UserOrders';
 import UserOrderpage from './pages/UserOrderpage';
+import UserProfilePage from './pages/UserProfilePage';
+import { fetchLoggedInUserAsyc, selectUserInfo } from './features/user/userSlice';
 
 const router = createBrowserRouter([
   {
@@ -70,6 +69,12 @@ const router = createBrowserRouter([
     )
   },
   {
+    path: '/profile',
+    element:(
+      <UserProfilePage></UserProfilePage>
+    )
+  },
+  {
     path: '*',
     element:(
       <PageNotFound></PageNotFound>
@@ -84,8 +89,8 @@ function App() {
   
   useEffect(() => {
     if(user){
-    dispatch(fetchitemsByUserIdAsync())
-
+    dispatch(fetchitemsByUserIdAsync(user.id))
+      dispatch(fetchLoggedInUserAsyc(user.id))
     }
   }, [dispatch, user])
   

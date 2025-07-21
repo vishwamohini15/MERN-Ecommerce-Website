@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchloggedInUserorderAsync, selectUserOrders } from '../userSlice';
-import { selectLoggedInuser } from '../../auth/authSlice';
+import { fetchloggedInUserorderAsync, selectUserInfo, selectUserOrders } from '../userSlice';
 
 export default function UserOrders() {
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInuser)
+  const user = useSelector(selectUserInfo)
   const orders = useSelector(selectUserOrders)
 
   useEffect(() => {
