@@ -16,7 +16,7 @@ import {
   updatecartAsync,
 } from '../features/cart/cartSlice';
 import { useForm } from 'react-hook-form';
-import { selectLoggedInuser, updateUserAsync } from '../features/auth/authSlice';
+import {updateUserAsync } from '../features/auth/authSlice';
 import { createOrderAsync, selectCurrentOrder } from '../features/order/orderSlice';
 import { selectUserInfo } from '../features/user/userSlice';
 
@@ -24,7 +24,7 @@ import { selectUserInfo } from '../features/user/userSlice';
 
 // useSelector
 const Ckeckout = () => {
-const user= useSelector(selectUserInfo)
+    const dispatch = useDispatch();
 const {
     register,
     handleSubmit,
@@ -32,8 +32,9 @@ const {
     watch,
     formState: { errors }} = useForm()
 
+const user= useSelector(selectUserInfo)
+
    const [open, setOpen] = useState(true)
-    const dispatch = useDispatch();
       const items=useSelector(selectitems)
       const currentOrder=useSelector(selectCurrentOrder)
     const totalAmount= items.reduce((amount, item)=>item.price*item.quantity +amount, 0)
