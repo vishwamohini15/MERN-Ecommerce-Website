@@ -39,3 +39,10 @@ export function checkUser(loginInfo) {
 }
 
 
+export function signOut(userId) {
+  return new Promise(async(resolve) =>{
+   //TODO: On server we vwill remove user session info
+  resolve({data: 'success'})
+}
+  );
+}
