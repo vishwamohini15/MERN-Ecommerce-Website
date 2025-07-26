@@ -31,9 +31,7 @@ export default function Userprofile() {
     }
   }, [selectedEditIndex, user, reset, showAddAddressForm]);
 
-  // Handle form submission for editing an address
-  // This function now receives the form data directly from react-hook-form
-  const handelEdit = (addressUpdate) => { // Removed 'index' from parameters as it's now 'selectedEditIndex'
+  const handelEdit = (addressUpdate) => { 
     const newUser = { ...user, addresses: [...(user.addresses || [])] }; // Deep copy for immutability, defensive check
     newUser.addresses.splice(selectedEditIndex, 1, addressUpdate); // Use selectedEditIndex
     dispatch(updateUserAsync(newUser));
@@ -104,6 +102,9 @@ export default function Userprofile() {
               Email address : {user.email}
             </h3>
 
+           {user.role==='admin' && (<h3 className="text-4xl font-bold tracking-tight text-red-500">
+              role address : {user.role}
+            </h3>)}
           </div>
 
 

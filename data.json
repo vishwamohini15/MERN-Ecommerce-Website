@@ -6007,6 +6007,23 @@
         "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods/3.webp"
       ],
       "thumbnail": "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods/thumbnail.webp"
+    },
+    {
+      "id": "08f3",
+      "title": "muskan",
+      "description": "tumato htsdddddddddd",
+      "brand": "Glamour Beauty",
+      "categories": "beauty",
+      "price": "9099",
+      "discountPercentage": "5",
+      "stock": "1",
+      "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
+      "images": [
+        "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp",
+        "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp",
+        "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp"
+      ],
+      "rating": 0
     }
   ],
   "brands": [
@@ -6274,6 +6291,7 @@
       "id": "2e47",
       "email": "vishwamohini0015@gmail.com",
       "password": "Vishw@123",
+      "role": "user",
       "addresses": [
         {
           "name": "muskangupta",
@@ -6299,6 +6317,7 @@
       "id": "4e63",
       "email": "viswamohinigupta@gmail.com",
       "password": "Vishw@123",
+      "role": "user",
       "addresses": [
         {
           "name": "vishwamohini",
@@ -6312,10 +6331,11 @@
       ]
     },
     {
-      "id": "9c2a",
-      "email": "viswamohinigupta@gmail.com",
-      "password": "Hello2123",
-      "addresses": []
+      "id": "06dd",
+      "email": "admin@gmail.com",
+      "password": "admin123@A",
+      "addresses": [],
+      "role": "admin"
     }
   ],
   "cart": [

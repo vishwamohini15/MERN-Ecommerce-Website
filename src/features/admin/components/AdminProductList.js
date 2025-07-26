@@ -10,7 +10,7 @@ import {
   selectCategories,
   fetchBrandasync,
   fetchCategoryasync,
-} from '../productSlice';
+} from '../../product-list/productSlice';
 import { ChevronLeftIcon, ChevronRightIcon, StarIcon} from '@heroicons/react/20/solid'
 import {
   Dialog,
@@ -43,7 +43,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function ProductList() {
+export function AdminProductList() {
   // const count = useSelector(selectCount);
   const dispatch = useDispatch();
     const products=useSelector(selectAllproducts)
@@ -192,9 +192,15 @@ options: brands,
               <DesktopFilter handelfilters={handelfilters}></DesktopFilter>
 
               {/* Product grid */}
-              
               <div className="lg:col-span-3">
-                
+                 <div>
+                  <Link
+                to="/admin/product-Form"
+                  
+                  >
+                <button className="flex items-start rounded-md bg-green-600 px-5 mt-3 py-2 ml-9 text-sm font-semibold text-white shadow-xs hover:bg-green-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >Add New Product</button>
+                </Link >
+              </div>
                  {/* this is list product page */}
                     <ProductGrid key={products.id}   products={products}></ProductGrid>
               </div>
@@ -460,6 +466,7 @@ function ProductGrid({products}){
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
           
           {products.map((product) => (
+            <div>
             <Link  to={`/product-detail/${product.id}`}>
             <div key={product.id} className="group relative border-solid border-2 p-2 border-gray-200 ">
               <img
@@ -484,14 +491,21 @@ function ProductGrid({products}){
                  
                 <p className="text-sm block  font-medium text-gray-900"> 
                   ${Math.round(product.price*(1-product.discountPercentage/100))}</p>
-                   <p className="text-sm  block font-medium text-gray-500 line-through"> ${product.price}</p>
+                   <p className="text-sm  block font-medium text-gray-500 line-through"> ${product.price}
+                   </p>
               </div>
-
+              
               </div>
               
             </div>
             </Link>
 
+            <div>
+                <Link 
+                to={`/admin/product-Form/edit/${product.id}`}
+                className="flex items-start rounded-md bg-indigo-600 px-8 mt-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Edit Product</Link>
+              </div>
+            </div>
           ))}
           
         </div>

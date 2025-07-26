@@ -5,7 +5,7 @@ import { useState, useEffect, use } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
 import {useDispatch, useSelector } from 'react-redux';
-import {fetchproductByIDasync, selectProductById}  from '../productSlice'
+import {fetchproductByIDasync, selectProductById}  from '../../product-list/productSlice'
 import {useParams} from 'react-router-dom'
 import { addTocartAsync } from '../../cart/cartSlice';
 import { selectLoggedInuser } from '../../auth/authSlice';
@@ -40,7 +40,7 @@ function classNames(...classes) {
 
 
 
-export default function ProductDetail() {
+export default function AdminProductDetail() {
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
   const user= useSelector(selectLoggedInuser)
