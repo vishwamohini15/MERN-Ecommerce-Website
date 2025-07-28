@@ -494,13 +494,14 @@ function ProductGrid({products}){
                    <p className="text-sm  block font-medium text-gray-500 line-through"> ${product.price}
                    </p>
               </div>
-              
               </div>
-              
+              <div>
+               {product.deleted && <p className='text-sm text-red-500 '>Product Deleted</p>}
+              </div>
             </div>
             </Link>
 
-            <div>
+            <div className='mt-5'>
                 <Link 
                 to={`/admin/product-Form/edit/${product.id}`}
                 className="flex items-start rounded-md bg-indigo-600 px-8 mt-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Edit Product</Link>

@@ -5,10 +5,10 @@
       "title": "Essence Mascara Lash Princess",
       "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
       "category": "beauty",
-      "price": 9.99,
-      "discountPercentage": 10.48,
-      "rating": 2.56,
-      "stock": 99,
+      "price": 999,
+      "discountPercentage": 8,
+      "rating": 0,
+      "stock": 1,
       "tags": [
         "beauty",
         "mascara"
@@ -50,24 +50,27 @@
       "returnPolicy": "No return policy",
       "minimumOrderQuantity": 48,
       "meta": {
-        "createdAt": "2025-04-30T09:41:02.053Z",
+        "create dAt": "2025-04-30T09:41:02.053Z",
         "updatedAt": "2025-04-30T09:41:02.053Z",
         "barcode": "5784719087687",
         "qrCode": "https://cdn.dummyjson.com/public/qr-code.png"
       },
       "images": [
+        "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp",
+        "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp",
         "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp"
       ],
-      "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp"
+      "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
+      "categories": "beauty"
     },
     {
       "id": "2",
       "title": "Eyeshadow Palette with Mirror",
       "description": "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
       "category": "beauty",
-      "price": 19.99,
+      "price": 4560,
       "discountPercentage": 18.19,
-      "rating": 2.86,
+      "rating": 0,
       "stock": 34,
       "tags": [
         "beauty",
@@ -116,18 +119,21 @@
         "qrCode": "https://cdn.dummyjson.com/public/qr-code.png"
       },
       "images": [
+        "https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/1.webp",
+        "https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/1.webp",
         "https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/1.webp"
       ],
-      "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/thumbnail.webp"
+      "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/thumbnail.webp",
+      "categories": "beauty"
     },
     {
       "id": "3",
       "title": "Powder Canister",
       "description": "The Powder Canister is a finely milled setting powder designed to set makeup and control shine. With a lightweight and translucent formula, it provides a smooth and matte finish.",
       "category": "beauty",
-      "price": 14.99,
+      "price": 8999,
       "discountPercentage": 9.84,
-      "rating": 4.64,
+      "rating": 0,
       "stock": 89,
       "tags": [
         "beauty",
@@ -176,9 +182,13 @@
         "qrCode": "https://cdn.dummyjson.com/public/qr-code.png"
       },
       "images": [
+        "https://cdn.dummyjson.com/product-images/beauty/powder-canister/1.webp",
+        "https://cdn.dummyjson.com/product-images/beauty/powder-canister/1.webp",
         "https://cdn.dummyjson.com/product-images/beauty/powder-canister/1.webp"
       ],
-      "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/powder-canister/thumbnail.webp"
+      "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/powder-canister/thumbnail.webp",
+      "categories": "beauty",
+      "deleted": true
     },
     {
       "id": "4",
@@ -236,9 +246,12 @@
         "qrCode": "https://cdn.dummyjson.com/public/qr-code.png"
       },
       "images": [
+        "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/1.webp",
+        "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/1.webp",
         "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/1.webp"
       ],
-      "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/thumbnail.webp"
+      "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/thumbnail.webp",
+      "categories": "beauty"
     },
     {
       "id": "5",
@@ -6011,12 +6024,12 @@
     {
       "id": "08f3",
       "title": "muskan",
-      "description": "tumato htsdddddddddd",
+      "description": "yes yes im",
       "brand": "Glamour Beauty",
       "categories": "beauty",
-      "price": "9099",
-      "discountPercentage": "5",
-      "stock": "1",
+      "price": 1234,
+      "discountPercentage": 5,
+      "stock": 1,
       "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
       "images": [
         "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp",

@@ -107,6 +107,7 @@ options: brands,
       console.log("Dispatching with:", ({ filter, sort, pagination }));
       dispatch(fetchproductsByFilterasync({filter, sort, pagination}))
 
+      //TODO: server will filter deleted products
     }, [dispatch, filter, sort, page])
 
     useEffect(()=>{
@@ -486,9 +487,11 @@ function ProductGrid({products}){
                   ${Math.round(product.price*(1-product.discountPercentage/100))}</p>
                    <p className="text-sm  block font-medium text-gray-500 line-through"> ${product.price}</p>
               </div>
-
-              </div>
+</div>
               
+              <div>
+               {product.deleted && <p className='text-sm text-red-500 '>Product Deleted</p>}
+              </div>
             </div>
             </Link>
 

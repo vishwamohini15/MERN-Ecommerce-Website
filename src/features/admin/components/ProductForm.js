@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
-import { createProductAsync, fetchproductByIDasync, selectBrands, selectCategories, selectProductById } from '../../product-list/productSlice'
+import { clearSelectedproduct, createProductAsync, fetchproductByIDasync, selectBrands, selectCategories, selectProductById, updateProductAsync } from '../../product-list/productSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
@@ -13,6 +13,7 @@ const ProductForm = () => {
       register,
       handleSubmit,
       setValue,
+      reset,
       watch,
       formState: { errors }} = useForm()
      const brands=useSelector(selectBrands)
@@ -24,14 +25,18 @@ const ProductForm = () => {
       useEffect(() => {
         if(params.id){
           dispatch(fetchproductByIDasync(params.id))
+        }else{
+         dispatch(clearSelectedproduct())
+         
         }
       }, [params.id, dispatch]) 
       
       useEffect(() => {
-        if(selectedproduct){
+        if(selectedproduct && params.id){
            setValue('title', selectedproduct.title);
         setValue('description', selectedproduct.description);
         setValue('brand', selectedproduct.brand);
+        setValue('price', selectedproduct.price);
         setValue('categories', selectedproduct.categories);
         setValue('discountPercentage', selectedproduct.discountPercentage);
         setValue('stock', selectedproduct.stock);
@@ -43,8 +48,14 @@ const ProductForm = () => {
 
         }
         
-      }, [selectedproduct])
+      }, [selectedproduct, params.id, setValue])
       
+
+      const handledelete=()=>{
+        const product={...selectedproduct}
+        product.deleted=true;
+        dispatch(updateProductAsync(product))
+      }
   return (
     <form
      noValidate  className="space-y-6" onSubmit={handleSubmit((data)=>{
@@ -62,10 +73,13 @@ const ProductForm = () => {
                     console.log(product);
                     
                     if(params.id){
-
+                      product.id=params.id
+                    product.rating=selectedproduct.rating || 0;
+                      dispatch(updateProductAsync(product))
+                      reset()
                     }else{
                       dispatch(createProductAsync(product))
-
+                      reset()
                     }
                         })}
     >
@@ -430,6 +444,14 @@ const ProductForm = () => {
         <button type="button" className="text-sm/6 font-semibold text-gray-900">
           Cancel
         </button>
+
+       {selectedproduct && <button
+          onClick={handledelete}
+          className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          DELETE
+        </button> }
+
         <button
           type="submit"
           onSubmit={handleSubmit}
