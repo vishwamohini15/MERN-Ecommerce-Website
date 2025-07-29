@@ -44,8 +44,7 @@ export function updateProduct(update) {
   resolve({data})
 }
   );
-}
-
+};
 
 
 export function fetchproductsByfilter(filter, sort, pagination) {
@@ -60,8 +59,9 @@ export function fetchproductsByfilter(filter, sort, pagination) {
   for (let key in filter) {
   const categoryValues = filter[key];
   if (categoryValues.length > 0) {
-    const lastcategoryvalue=categoryValues[categoryValues.length-1]
-      queryString += `${key}=${lastcategoryvalue}&`;
+    categoryValues.forEach(value => { 
+      queryString += `${key}=${value}&`;
+    });
   }
 }
   
@@ -81,6 +81,9 @@ export function fetchproductsByfilter(filter, sort, pagination) {
   const data=await response.json()
   const totalItems=await response.headers.get('X-Total-Count')|| data.length
   resolve({data:{products:data,totalItems:+totalItems}})
+  console.log("totalItems", totalItems);
+
+  
 } 
   );
 }

@@ -84,9 +84,9 @@ options: brands,
          newFilter[section.id]=[option.value]
         }
       }else{
-        const index= newFilter[section.id] = newFilter[section.id].filter(el => el !== option.value);
-        newFilter[section.id].splice(index,1)
-      }
+  // यह सही तरीका है एक आइटम को ऐरे से हटाने का
+  newFilter[section.id] = newFilter[section.id].filter(el => el !== option.value);
+}
       console.log({newFilter});
       setfilter(newFilter)
       
@@ -97,13 +97,15 @@ options: brands,
       setsort(sort)
       console.log({sort});
     }
+
     const handelPage=(page)=>{
-      console.log({page});
    setpage(page)
+      console.log({page});
+
     }
 
     useEffect(() => {
-      const pagination= {_page:page,_limit:ITEMS_PER_PAGE}
+      const pagination= {_page:page, _limit:ITEMS_PER_PAGE}
       console.log("Dispatching with:", ({ filter, sort, pagination }));
       dispatch(fetchproductsByFilterasync({filter, sort, pagination}))
 
@@ -112,12 +114,12 @@ options: brands,
 
     useEffect(()=>{
       setpage(1)
-    },[totalItems,sort])
+    },[filter,sort])
 
      useEffect(()=>{
       dispatch(fetchBrandasync())
       dispatch(fetchCategoryasync())
-    },[totalItems,sort])
+    },[])
 
   return (
     <div>
@@ -206,8 +208,12 @@ options: brands,
 
           {/* section of product and filters end */}
           
-     <Pagination  page={page} setpage={setpage} handelPage={handelPage}
-     totalItems={totalItems}
+     <Pagination 
+      page={page} 
+     setpage={setpage}
+      handelPage={handelPage}
+     totalItems={totalItems}  
+      ITEMS_PER_PAGE={ITEMS_PER_PAGE}
      ></Pagination>
         </main>
       </div>
@@ -385,7 +391,7 @@ function DesktopFilter({handelfilters}){
   )
 }
 
-function Pagination({page, setpage,handelPage, totalItems=55}){
+function Pagination({page, setpage,handelPage, totalItems, ITEMS_PER_PAGE}){
   const totalPages= Math.ceil(totalItems / ITEMS_PER_PAGE)
   return ( 
     <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
