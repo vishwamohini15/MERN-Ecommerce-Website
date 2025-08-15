@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { discountPrice, ITEMS_PER_PAGE } from '../../../app/constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { PencilIcon, EyeIcon} from '@heroicons/react/24/outline'
+import { PencilIcon, EyeIcon, ArrowDownIcon, ArrowUpIcon} from '@heroicons/react/24/outline'
 import { fetchAllOrdersAsync, selectOrders, selectTotalorders, updateOrderAsync } from '../../order/orderSlice';
+import Pagination from '../../common/Pagination';
 
 export const AdminOrder = () => {
      const [page, setpage]=useState(1);
@@ -10,13 +11,10 @@ export const AdminOrder = () => {
      const orders=useSelector(selectOrders)
      const totalOrders=useSelector(selectTotalorders)
      const [editableorderId, setEditableorderid]=useState(-1)
+    const [sort, setsort]=useState({})
+     
   
-   useEffect(() => {
-        const pagination= {_page:page, _limit:ITEMS_PER_PAGE}
-        dispatch(fetchAllOrdersAsync({pagination}))
-  
-        //TODO: server will filter deleted products
-      }, [dispatch, page])
+ 
 
       const handleShow=(order)=>{
         setEditableorderid(order.id)
@@ -31,7 +29,42 @@ export const AdminOrder = () => {
       const handleUpdate=(e, order)=>{
         const updateOrder= {...order, status:e.target.value}
         dispatch(updateOrderAsync(updateOrder))
+        setEditableorderid(-1)
       }
+
+
+      const handelPage=(page)=>{
+        setpage(page)
+        
+      }
+
+      const handleSort=(sortOption)=>{
+      const sort={_sort:sortOption.sort, _order: sortOption.order}
+      setsort(sort)
+      console.log({sort});
+    }
+
+
+      const chooseColor=(status)=>{
+        switch(status){
+          case 'pending':
+            return `bg-purple-200 text-purple-600`;
+             case 'dispatched':
+            return `bg-yellow-200 text-yellow-600`;
+             case 'delivered':
+            return `bg-green-200 text-green-600`;
+             case 'cancelled':
+            return `bg-red-200 text-red-600`;
+            default:
+              return `bg-purple-200 text-purple-600`
+        }
+      }
+
+        useEffect(() => {
+        const pagination= {_page:page, _limit:ITEMS_PER_PAGE}
+        dispatch(fetchAllOrdersAsync({sort, pagination}))
+
+      }, [dispatch, page, sort])
   return (
 <div className="overflow-x-auto ">
   <div className=" bg-gray-100 flex items-center justify-center  font-sans overflow-hidden">
@@ -41,8 +74,37 @@ export const AdminOrder = () => {
           <thead>
 
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal ">
-              <th className="py-3 px-6 text-left">order</th>
+ <th className="py-3 px-6 text-left cursor-pointer" 
+ onClick={(e)=>
+ handleSort({
+  sort:'id',
+   order:sort?._order ==='asc'?'desc':'asc',
+   })
+  }
+   >order {' '}
+   {sort._sort === 'id' &&
+    (sort._order === 'asc' ? 
+      (<ArrowUpIcon className='w-4 h-4 inline'></ArrowUpIcon>
+      ):(<ArrowDownIcon className='w-4 h-4 inline'></ArrowDownIcon>
+
+      ))}
+      </th>
               <th className="py-3 px-6 text-left">Item</th>
+              <th className="py-3 px-6 text-left cursor-pointer" 
+ onClick={(e)=>
+ handleSort({
+  sort:'id',
+   order:sort?._order ==='asc'?'desc':'asc',
+   })
+  }
+   >Total Amount {' '}
+   {sort._sort === 'id' &&
+    (sort._order === 'asc' ? 
+      (<ArrowUpIcon className='w-4 h-4 inline'></ArrowUpIcon>
+      ):(<ArrowDownIcon className='w-4 h-4 inline'></ArrowDownIcon>
+
+      ))}
+      </th>
               <th className="py-3 px-6 text-center">Total Amount</th>
               <th className="py-3 px-6 text-center">Shiping Address</th>
               <th className="py-3 px-6 text-center">Status</th>
@@ -104,7 +166,7 @@ export const AdminOrder = () => {
                 
                
               ) : (
-                <span className="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">
+          <span className={` ${chooseColor(order.status)} py-1 px-3 rounded-full text-xs`}>
                   {order.status}
                 </span> 
               )}
@@ -128,6 +190,13 @@ export const AdminOrder = () => {
       </div>
     </div>
   </div>
+
+   <Pagination
+        page={page} 
+       setpage={setpage}
+        handelPage={handelPage}
+       totalItems={totalOrders}  
+       ></Pagination>
 </div>
   )
 }

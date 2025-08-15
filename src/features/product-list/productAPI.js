@@ -79,7 +79,7 @@ export function fetchproductsByfilter(filter, sort, pagination) {
     //todo will not hard coded server URL here
     const response=await fetch('http://localhost:8080/products?'+queryString)
   const data=await response.json()
-  const totalItems=await response.headers.get('X-Total-Count')|| data.length
+  const totalItems=await response.headers.get('X-Total-Count')|| data.length  
   resolve({data:{products:data,totalItems:+totalItems}})
   console.log("totalItems", totalItems);
 
