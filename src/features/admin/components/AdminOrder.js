@@ -93,19 +93,18 @@ export const AdminOrder = () => {
               <th className="py-3 px-6 text-left cursor-pointer" 
  onClick={(e)=>
  handleSort({
-  sort:'id',
+  sort:'totalAmount',
    order:sort?._order ==='asc'?'desc':'asc',
    })
   }
    >Total Amount {' '}
-   {sort._sort === 'id' &&
+   {sort._sort === 'totalAmount' &&
     (sort._order === 'asc' ? 
       (<ArrowUpIcon className='w-4 h-4 inline'></ArrowUpIcon>
       ):(<ArrowDownIcon className='w-4 h-4 inline'></ArrowDownIcon>
 
       ))}
       </th>
-              <th className="py-3 px-6 text-center">Total Amount</th>
               <th className="py-3 px-6 text-center">Shiping Address</th>
               <th className="py-3 px-6 text-center">Status</th>
               <th className="py-3 px-6 text-center">Actions</th>

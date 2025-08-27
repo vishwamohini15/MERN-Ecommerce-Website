@@ -1,15 +1,18 @@
 'use client'
   //TODO: in server data will add color and size  and highlights
 
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
 import {useDispatch, useSelector } from 'react-redux';
 import {fetchproductByIDasync, selectProductById}  from '../productSlice'
 import {useParams} from 'react-router-dom'
-import { addTocartAsync } from '../../cart/cartSlice';
+import { addTocartAsync, selectitems } from '../../cart/cartSlice';
 import { selectLoggedInuser } from '../../auth/authSlice';
 import { discountPrice } from '../../../app/constants';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import { useAlert } from "react-alert";
 
 
  const colors= [ 
@@ -42,18 +45,27 @@ function classNames(...classes) {
 
 
 export default function ProductDetail() {
+  // const alert = useAlert();
   const [selectedColor, setSelectedColor] = useState(colors[0])
   const [selectedSize, setSelectedSize] = useState(sizes[2])
   const user= useSelector(selectLoggedInuser)
+  const items= useSelector(selectitems)
   const product=useSelector(selectProductById);
  const dispatch=useDispatch()
 const params = useParams();
 
 const handelcart=(e)=>{
       e.preventDefault()
-      const newItem= {...product, quantity:1, user:user.id}
+      if(items.findIndex(item=>item.productId===product.id)<0){
+        console.log({items, product});
+      const newItem= {...product, productId:product.id, quantity:1, user:user.id}
       delete newItem['id'];
       dispatch(addTocartAsync(newItem))
+      }else{
+        console.log("already added");
+        
+      }
+
 }
 
   useEffect(() => {
@@ -241,7 +253,12 @@ const handelcart=(e)=>{
               >
                 Add to cart
               </button>
+               
             </form>
+             <button onClick={() => toast.success("Wow, so easy!")}>
+        Show Toast
+      </button>
+      <ToastContainer position="bottom-left" autoClose={5000} />
           </div>
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pt-6 lg:pr-8 lg:pb-16">
