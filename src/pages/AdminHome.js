@@ -8,7 +8,6 @@ const AdminHome = () => {
     <div>
       <Navbar>
       <AdminProductList></AdminProductList>
-
       </Navbar>
     </div>
   )

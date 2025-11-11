@@ -11,8 +11,6 @@ import { addTocartAsync, selectitems } from '../../cart/cartSlice';
 import { selectLoggedInuser } from '../../auth/authSlice';
 import { discountPrice } from '../../../app/constants';
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-// import { useAlert } from "react-alert";
 
 
  const colors= [ 
@@ -56,14 +54,14 @@ const params = useParams();
 
 const handelcart=(e)=>{
       e.preventDefault()
-      if(items.findIndex(item=>item.productId===product.id)<0){
+      if(Array.isArray(items) && items.findIndex(item=>item.product.id===product.id)<0){
         console.log({items, product});
-      const newItem= {...product, productId:product.id, quantity:1, user:user.id}
-      delete newItem['id'];
+      const newItem= {product:product.id, quantity:1, user:user.id}
       dispatch(addTocartAsync(newItem))
+      toast.success("Item added to cart! 🛒");
       }else{
         console.log("already added");
-        
+        toast.info("Already added to cart!");
       }
 
 }
@@ -255,9 +253,7 @@ const handelcart=(e)=>{
               </button>
                
             </form>
-             <button onClick={() => toast.success("Wow, so easy!")}>
-        Show Toast
-      </button>
+             
       <ToastContainer position="bottom-left" autoClose={5000} />
           </div>
 

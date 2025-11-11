@@ -83,7 +83,7 @@ export function fetchproductsByfilter(filter, sort, pagination) {
   resolve({data:{products:data,totalItems:+totalItems}})
   console.log("totalItems", totalItems);
 
-  
+  // Content-Length
 } 
   );
 }

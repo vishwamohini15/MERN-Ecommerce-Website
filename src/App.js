@@ -31,6 +31,8 @@ import AdminProductFormPage from './pages/AdminproductFormPage';
 import AdminOrdersPage from './pages/AdminOrdersPage';
 // import { positions, Provider } from "react-alert";
 // import AlertTemplate from "react-alert-template-basic";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 // const options = {
@@ -155,6 +157,7 @@ function App() {
   return (
     <div className="App">
       <RouterProvider router={router} />
+        <ToastContainer position="bottom-left" autoClose={5000} />
     </div>
   );
 }

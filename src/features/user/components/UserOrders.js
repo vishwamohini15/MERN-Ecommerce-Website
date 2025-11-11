@@ -6,17 +6,18 @@ import { discountPrice } from '../../../app/constants';
 
 export default function UserOrders() {
   const dispatch = useDispatch();
-  const user = useSelector(selectUserInfo)
+  const userInfo = useSelector(selectUserInfo)
   const orders = useSelector(selectUserOrders)
 
   useEffect(() => {
-    dispatch(fetchloggedInUserorderAsync(user.id))
+    dispatch(fetchloggedInUserorderAsync(userInfo.id))
   }, [])
 
 
   return (
     <div>
-      {orders.map(order => (
+      {Array.isArray(orders) && orders.length > 0 ? (
+      orders.map(order => (
         <div>
           <div>
 
@@ -31,22 +32,24 @@ export default function UserOrders() {
 
                 <div className="flow-root">
                   <ul role="list" className="-my-6 divide-y divide-gray-200">
-                    {order.items.map((item) => (
+                    {Array.isArray(order.items) && order.items.length > 0 ? (
+                    order.items.map((item) => (
                       <li key={item.id} className="flex py-6">
                         <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                          <img alt={item.title}
-                            src={item.thumbnail} className="size-full object-cover" />
+                          <img alt={item.product.title}
+                            src={item.product.thumbnail} className="size-full object-cover" />
                         </div>
 
                         <div className="ml-4 flex flex-1 flex-col">
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>
-                                <a href={item.href}>{item.title}</a>
+                                <a href={item.product.href}>{item.product.title}</a>
                               </h3>
-                              <p className="ml-4">{discountPrice(item)}</p>
+                              <p className="ml-4">{discountPrice(item.product)}</p>
                             </div>
-                            <p className="mt-1 text-sm text-gray-500">{item.brand}</p>
+                            <p className="mt-1 text-sm text-gray-500">
+                              {item.product.brand}</p>
                           </div>
                           <div className="flex flex-1 items-end justify-between text-sm">
                             <div className="text-gray-500">
@@ -62,7 +65,9 @@ export default function UserOrders() {
                           </div>
                         </div>
                       </li>
-                    ))}
+                    ))):(
+                       <li className="py-6 text-gray-500">No items found</li>
+                    )}
                   </ul>
                 </div>
               </div>
@@ -80,6 +85,7 @@ export default function UserOrders() {
                 <p className="mt-0.5 text-sm text-gray-500">Your Selected Receving Addressh
                 </p>
                
+               {order.selectedAddress ? (
                    <div 
                     className="flex justify-between gap-x-6 py-5 border-solid border-2 border-gray-200">
           
@@ -96,16 +102,18 @@ export default function UserOrders() {
           <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
             <p className="text-sm/6 text-gray-900">phone : {order.selectedAddress.phone}</p>
             <p className="text-sm/6 text-gray-900">{order.selectedAddress.city}</p>
-
-           
           </div>
         </div>
-
+) : (
+  <p className="mt-2 text-gray-500">No address found</p>
+)}
               </div>
             </div>
           </div>
         </div>
-      ))}
+      ))):(
+      <p className="text-center mt-10 text-gray-500">No orders yet.</p>
+      )}
     </div>
   );
 }

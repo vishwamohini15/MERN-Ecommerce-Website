@@ -19,20 +19,20 @@ export default function Userprofile() {
   } = useForm();
 
   const dispatch = useDispatch();
-  const user = useSelector(selectUserInfo);
+  const userInfo = useSelector(selectUserInfo);
 
   // Effect to reset the form with the selected address data when selectedEditIndex changes
   useEffect(() => {
-    if (selectedEditIndex !== -1 && user && user.addresses && user.addresses[selectedEditIndex]) {
-      reset(user.addresses[selectedEditIndex]);
+    if (selectedEditIndex !== -1 && userInfo && userInfo.addresses && userInfo.addresses[selectedEditIndex]) {
+      reset(userInfo.addresses[selectedEditIndex]);
     } else if (selectedEditIndex === -1 && !showAddAddressForm) {
       // If no address is selected for editing AND we're not showing the add form, reset the form
       reset();
     }
-  }, [selectedEditIndex, user, reset, showAddAddressForm]);
+  }, [selectedEditIndex, userInfo, reset, showAddAddressForm]);
 
   const handelEdit = (addressUpdate) => { 
-    const newUser = { ...user, addresses: [...(user.addresses || [])] }; // Deep copy for immutability, defensive check
+    const newUser = { ...userInfo, addresses: [...(userInfo.addresses || [])] }; // Deep copy for immutability, defensive check
     newUser.addresses.splice(selectedEditIndex, 1, addressUpdate); // Use selectedEditIndex
     dispatch(updateUserAsync(newUser));
     setSelectedIndex(-1);
@@ -52,13 +52,13 @@ export default function Userprofile() {
   };
 
   const handelRemove = (e, index) => { // Original signature, kept as requested
-    const newUser = { ...user, addresses: [...(user.addresses || [])] }; // for shallow copy issue, defensive check
+    const newUser = { ...userInfo, addresses: [...(userInfo.addresses || [])] }; // for shallow copy issue, defensive check
     newUser.addresses.splice(index, 1);
     dispatch(updateUserAsync(newUser));
   };
 
   const handelAdd = (address) => {
-    const newUser = { ...user, addresses: [...(user.addresses || []), address] }; // Defensive check for addresses array
+    const newUser = { ...userInfo, addresses: [...(userInfo.addresses || []), address] }; // Defensive check for addresses array
     dispatch(updateUserAsync(newUser));
     SetshowAddAddressForm(false); // Original state setter name, kept as requested
     reset(); // Clear the form fields after successful submission
@@ -80,7 +80,7 @@ export default function Userprofile() {
   };
 
   // --- Conditional Rendering for the entire component if user is null ---
-  if (!user) {
+  if (!userInfo) {
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-xl text-gray-700">Loading user profile...</p>
@@ -95,15 +95,15 @@ export default function Userprofile() {
 
           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-              Name : {user.name ? user.name : 'new user'}
+              Name : {userInfo.name ? userInfo.name : 'new user'}
             </h1>
 
             <h3 className="text-4xl font-bold tracking-tight text-red-500">
-              Email address : {user.email}
+              Email address : {userInfo.email}
             </h3>
 
-           {user.role==='admin' && (<h3 className="text-4xl font-bold tracking-tight text-red-500">
-              role address : {user.role}
+           {userInfo.role==='admin' && (<h3 className="text-4xl font-bold tracking-tight text-red-500">
+              role address : {userInfo.role}
             </h3>)}
           </div>
 
@@ -265,8 +265,8 @@ export default function Userprofile() {
             ) : null}
 
             <p className="mt-0.5 text-sm text-gray-500">Your Addressh</p> {/* Original typo, kept as requested */}
-            {user.addresses && user.addresses.length > 0 ? ( // Added conditional check for addresses
-              user.addresses.map((address, index) => (
+            {userInfo.addresses && userInfo.addresses.length > 0 ? ( // Added conditional check for addresses
+              userInfo.addresses.map((address, index) => (
                 <div key={address.id || index}> {/* Added key for list items */}
                   {selectedEditIndex === index ? (
                     // Edit Form

@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchCount, fetchLoggedInUser, updateUser } from './userAPI';
 import { fetchLoggedInUserOrders } from './userAPI';
-import { updateUserAsync } from '../auth/authSlice';
+// import { updateUserAsync } from '../auth/authSlice';
 
 const initialState = {
-  userOrders: [],
   status: 'idle',
   userinfo: null,  //this info will be used in case of detailed user info, while auth will
   //only be used for loggedinuer id etc checks. 
@@ -30,10 +29,10 @@ export const fetchLoggedInUserAsyc = createAsyncThunk(
   }
 );
 
-export const UdateUserAsync = createAsyncThunk(
+export const updateUserAsync = createAsyncThunk(
   'counter/updateUser',
-  async (id) => {
-    const response = await updateUser(id);
+  async (update) => {
+    const response = await updateUser(update);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -56,14 +55,14 @@ export const userSlice = createSlice({
       .addCase(fetchloggedInUserorderAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         //this info can be diffrentor more from logged in user info
-        state.userOrders = action.payload;
+        state.userinfo.orders = action.payload;
       })
         .addCase(updateUserAsync.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(updateUserAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.userOrders = action.payload;
+        state.userinfo=action.payload;
       })
        .addCase(fetchLoggedInUserAsyc.pending, (state) => {
         state.status = 'loading';
@@ -76,7 +75,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const selectUserOrders=(state)=>state.user.userOrders;
+export const selectUserOrders=(state)=>state.user.userinfo.orders;
 export const selectUserInfo=(state)=>state.user.userinfo;
 
 export const { increment } = userSlice.actions;
