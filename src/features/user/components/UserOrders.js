@@ -105,7 +105,7 @@ export default function UserOrders() {
           </div>
         </div>
 ) : (
-  <p className="mt-2 text-gray-500">No address found</p>
+  <p className="mt-2 text-gray-500">No Address found</p>
 )}
               </div>
             </div>
