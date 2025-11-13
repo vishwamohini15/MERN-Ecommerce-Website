@@ -37,13 +37,13 @@ export function fetchAllOrders(sort, pagination) {
   queryString +=`${key}=${pagination[key]}&`
   }
 
-    console.log("Final queryString:", queryString);
+    // console.log("Final queryString:", queryString);
 
   return new Promise(async(resolve) =>{
     //todo will not hard coded server URL here
     const response=await fetch('http://localhost:8080/orders?'+queryString)
   const data=await response.json()
-  const totalOrders=await response.headers.get('X-Total-Count')|| data.length
+  const totalOrders=await response.headers.get('X-Total-Count')
   resolve({data:{orders:data,totalOrders:+totalOrders}})
 } 
   );

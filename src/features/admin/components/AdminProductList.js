@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
 
   selectAllproducts,
-  fetchAllproductasync,
   fetchproductsByFilterasync,
   selecttotalItems,
   selectBrands,
@@ -105,7 +104,7 @@ options: brands,
     useEffect(() => {
       const pagination= {_page:page,_limit:ITEMS_PER_PAGE}
       console.log("Dispatching with:", ({ filter, sort, pagination }));
-      dispatch(fetchproductsByFilterasync({filter, sort, pagination}))
+      dispatch(fetchproductsByFilterasync({filter, sort, pagination, admin:true}))
 
     }, [dispatch, filter, sort, page])
 

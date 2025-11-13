@@ -5,6 +5,7 @@ import { clearSelectedproduct, createProductAsync, fetchproductByIDasync, select
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 
 
@@ -76,9 +77,13 @@ const ProductForm = () => {
                       product.id=params.id
                     product.rating=selectedproduct.rating || 0;
                       dispatch(updateProductAsync(product))
+                      toast.success('Product Updated')
+
                       reset()
                     }else{
                       dispatch(createProductAsync(product))
+                      toast.success('Product Created')
+
                       reset()
                     }
                         })}
@@ -88,6 +93,7 @@ const ProductForm = () => {
           <h2 className="text-base/7 font-semibold text-gray-900">Add product</h2>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            { selectedproduct && selectedproduct.deleted && <h2 className='text-red-500  sm:col-span-6'>This product is Deleted</h2> }
             <div className="sm:col-span-4">
               <label htmlFor="title" className="block text-sm/6 font-medium text-gray-900">
                 product name

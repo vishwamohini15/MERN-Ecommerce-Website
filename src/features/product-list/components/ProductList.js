@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
 
   selectAllproducts,
-  fetchAllproductasync,
   fetchproductsByFilterasync,
   selecttotalItems,
   selectBrands,
